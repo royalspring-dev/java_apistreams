@@ -1,4 +1,8 @@
-package com.royalspring;
+package com.royalspring.data;
+
+import com.royalspring.model.HorarioConsumo;
+import com.royalspring.model.Producto;
+import com.royalspring.model.TipoProducto;
 
 import java.time.LocalDate;
 import java.util.*;

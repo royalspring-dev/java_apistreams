@@ -1,4 +1,4 @@
-package com.royalspring;
+package com.royalspring.model;
 
 public enum CategoriaPrecio {
     ECONOMICO(0, 1000),

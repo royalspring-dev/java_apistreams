@@ -1,4 +1,4 @@
-package com.royalspring;
+package com.royalspring.model;
 
 import java.time.LocalDate;
 import java.util.Arrays;

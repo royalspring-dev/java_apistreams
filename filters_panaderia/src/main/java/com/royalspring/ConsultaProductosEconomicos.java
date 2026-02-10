@@ -1,5 +1,8 @@
 package com.royalspring;
 
+import com.royalspring.data.ProductosDataInitializer;
+import com.royalspring.model.Producto;
+
 import java.util.List;
 
 public class ConsultaProductosEconomicos {
