@@ -1,0 +1,203 @@
+package com.royalspring;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+public class PanaderiaStreams {
+
+    private static List<ProductoPanaderia> productos = new ArrayList<>();
+
+    public static void main(String[] args) {
+        inicializarProductos();
+
+        System.out.println("=== 12 CONSULTAS CON STREAMS ===");
+        System.out.println();
+
+        // Ejecutar todas las consultas
+        consulta1();
+        consulta2();
+        consulta3();
+        consulta4();
+        consulta5();
+        consulta6();
+        consulta7();
+        consulta8();
+        consulta9();
+        consulta10();
+        consulta11();
+        consulta12();
+    }
+
+    private static void inicializarProductos() {
+        productos.add(new ProductoPanaderia("Pan Integral", "pan", 2.50, 15,
+                LocalDate.now().minusDays(1), true, 500, 120, true, "Panadería Central"));
+
+        productos.add(new ProductoPanaderia("Croissant", "bollo", 1.80, 25,
+                LocalDate.now(), false, 80, 300, false, "Pastelería Francesa"));
+
+        productos.add(new ProductoPanaderia("Tarta de Chocolate", "tarta", 18.90, 5,
+                LocalDate.now().minusDays(2), false, 1200, 450, false, "Dulces S.A."));
+
+        productos.add(new ProductoPanaderia("Galletas de Avena", "galleta", 3.20, 30,
+                LocalDate.now().minusDays(3), true, 200, 150, true, "Natural Foods"));
+
+        productos.add(new ProductoPanaderia("Pan de Centeno", "pan", 3.00, 12,
+                LocalDate.now().minusDays(1), true, 600, 140, true, "Panadería Central"));
+
+        productos.add(new ProductoPanaderia("Donut Glaseado", "bollo", 2.00, 20,
+                LocalDate.now(), false, 90, 350, false, "Dulces S.A."));
+
+        productos.add(new ProductoPanaderia("Tarta de Zanahoria", "tarta", 16.50, 3,
+                LocalDate.now().minusDays(1), true, 1100, 380, true, "Vegan Delights"));
+
+        productos.add(new ProductoPanaderia("Pan Blanco", "pan", 1.80, 18,
+                LocalDate.now(), false, 450, 130, true, "Panadería Central"));
+
+        productos.add(new ProductoPanaderia("Magdalena", "bollo", 0.80, 50,
+                LocalDate.now().minusDays(2), false, 50, 180, false, "Pastelería Francesa"));
+
+        productos.add(new ProductoPanaderia("Galletas de Chocolate", "galleta", 2.80, 35,
+                LocalDate.now().minusDays(1), false, 180, 220, false, "Dulces S.A."));
+
+        productos.add(new ProductoPanaderia("Pan sin Gluten", "pan", 4.50, 8,
+                LocalDate.now(), true, 400, 110, true, "Natural Foods"));
+
+        productos.add(new ProductoPanaderia("Tarta de Fresa", "tarta", 20.00, 4,
+                LocalDate.now(), false, 1300, 400, false, "Pastelería Francesa"));
+
+        productos.add(new ProductoPanaderia("Palmera de Chocolate", "bollo", 1.50, 22,
+                LocalDate.now().minusDays(1), false, 70, 280, false, "Dulces S.A."));
+
+        productos.add(new ProductoPanaderia("Galletas Integrales", "galleta", 3.50, 28,
+                LocalDate.now().minusDays(2), true, 220, 180, true, "Natural Foods"));
+    }
+
+    // CONSULTA 1: Productos con precio mayor a 3€
+    private static void consulta1() {
+        System.out.println("1. Productos con precio > 3€:");
+        productos.stream()
+                .filter(p -> p.getPrecio() > 3)
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA 2: Productos sin gluten
+    private static void consulta2() {
+        System.out.println("2. Productos sin gluten:");
+        productos.stream()
+                .filter(ProductoPanaderia::isSinGluten)
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA 3: Productos veganos con stock menor a 10 unidades
+    private static void consulta3() {
+        System.out.println("3. Productos veganos con stock < 10:");
+        productos.stream()
+                .filter(p -> p.isVegano() && p.getUnidadesStock() < 10)
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA 4: Panes ordenados por precio descendente
+    private static void consulta4() {
+        System.out.println("4. Panes ordenados por precio (descendente):");
+        productos.stream()
+                .filter(p -> p.getTipo().equals("pan"))
+                .sorted(Comparator.comparingDouble(ProductoPanaderia::getPrecio).reversed())
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA 5: Productos con más de 300 calorías por porción
+    private static void consulta5() {
+        System.out.println("5. Productos con más de 300 calorías:");
+        productos.stream()
+                .filter(p -> p.getCaloriasPorcion() > 300)
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA 6: Productos del proveedor "Panadería Central"
+    private static void consulta6() {
+        System.out.println("6. Productos de Panadería Central:");
+        productos.stream()
+                .filter(p -> p.getProveedor().equals("Panadería Central"))
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA 7: Productos con precio entre 1€ y 4€
+    private static void consulta7() {
+        System.out.println("7. Productos entre 1€ y 4€:");
+        productos.stream()
+                .filter(p -> p.getPrecio() >= 1 && p.getPrecio() <= 4)
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA 8: Tartas sin gluten
+    private static void consulta8() {
+        System.out.println("8. Tartas sin gluten:");
+        productos.stream()
+                .filter(p -> p.getTipo().equals("tarta") && p.isSinGluten())
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA 9: Productos con peso mayor a 1kg (1000g)
+    private static void consulta9() {
+        System.out.println("9. Productos con peso > 1000g:");
+        productos.stream()
+                .filter(p -> p.getPesoGramos() > 1000)
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA 10: Productos con stock bajo (< 5 unidades)
+    private static void consulta10() {
+        System.out.println("10. Productos con stock bajo (< 5 unidades):");
+        productos.stream()
+                .filter(p -> p.getUnidadesStock() < 5)
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA 11: Productos que NO son veganos
+    private static void consulta11() {
+        System.out.println("11. Productos NO veganos:");
+        productos.stream()
+                .filter(p -> !p.isVegano())
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA 12: Productos que son galletas y tienen más de 20 unidades en stock
+    private static void consulta12() {
+        System.out.println("12. Galletas con más de 20 unidades:");
+        productos.stream()
+                .filter(p -> p.getTipo().equals("galleta") && p.getUnidadesStock() > 20)
+                .forEach(System.out::println);
+        System.out.println();
+    }
+
+    // CONSULTA EXTRA: Agrupación por tipo de producto
+    private static void consultaExtra() {
+        System.out.println("EXTRA: Conteo de productos por tipo:");
+        Map<String, Long> conteoPorTipo = productos.stream()
+                .collect(Collectors.groupingBy(
+                        ProductoPanaderia::getTipo,
+                        Collectors.counting()
+                ));
+
+        conteoPorTipo.forEach((tipo, cantidad) ->
+                System.out.println(tipo + ": " + cantidad + " productos")
+        );
+        System.out.println();
+    }
+}
